@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>FirePace</title
+  ><link rel="stylesheet" href="style.css" />
+  <header>
+    <div class="brand">
+      <img class="icon" src="icon.png" alt="FirePace icon" />
+      <div>
+        <strong>FirePace</strong
+        ><small>Focus and break timer</small>
+      </div>
+    </div>
+    <div class="status" id="connectionStatus">
+      <span class="dot"></span><span id="connection">Not connected</span>
+    </div>
+    <button id="orientationToggle" popovertarget="orientationMenu">
+      Landscape ▾</button
+    ><select id="transport" aria-label="Connection type">
+      <option value="usb">USB cable</option>
+      <option value="wifi">Wi-Fi</option></select
+    ><button id="pair">Pair Wi-Fi</button
+    ><button id="connect">Connect Kindle</button>
+  </header>
+  <main class="timer-layout">
+    <section class="stage">
+      <div class="eyebrow">FirePace</div>
+      <h1 id="stageTitle">Make room for focus.</h1>
+      <p class="muted" id="stageNote">Pick a task. Set your pace. Begin.</p>
+      <section id="quickTimers" aria-label="Ready-made timers">
+        <div class="quick-heading">
+          <h2>Ready to start</h2>
+          <span class="muted">Or make your own →</span>
+        </div>
+        <div id="timerCards" class="timer-cards"></div>
+      </section>
+      <div class="device">
+        <canvas
+          id="preview"
+          width="800"
+          height="600"
+          aria-label="E-reader task and timer preview"
+        ></canvas>
+      </div>
+      <div class="preview-label">
+        <span id="phaseLabel">Focus · ready</span
+        ><span id="deviceLabel">Preview</span>
+      </div>
+      <div class="timer-actions">
+        <button id="pause" disabled>Pause</button
+        ><button id="restart" disabled>Restart</button
+        ><button id="skip" disabled>Take a break</button
+        ><button id="stop" disabled>End session</button>
+      </div>
+      <p id="message" class="toast" role="status"></p>
+    </section>
+    <aside class="settings">
+      <div class="panel">
+        <h2 id="formTitle">Make a timer</h2>
+        <div id="activeSummary" class="hidden">
+          <span class="eyebrow">Current task</span>
+          <h3 id="activeTask"></h3>
+          <p class="muted" id="activeTiming"></p>
+          <p class="notice">
+            Use the controls below the preview, or the buttons on your Kindle.
+          </p>
+        </div>
+        <div id="setupFields">
+          <div class="field">
+            <label for="preset">Saved timers</label
+            ><select id="preset">
+              <option value="">New timer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="heading">Heading</label
+            ><input id="heading" value="Next task" maxlength="50" />
+          </div>
+          <div class="field">
+            <label for="task">What will you work on?</label
+            ><input
+              id="task"
+              placeholder="Write the next chapter"
+              maxlength="240"
+            />
+          </div>
+          <div class="field">
+            <label for="direction">Timer</label
+            ><select id="direction">
+              <option value="down">Count down · focus & breaks</option>
+              <option value="up">Count up · open-ended</option>
+            </select>
+          </div>
+          <div class="row" id="durations">
+            <div class="field">
+              <label for="minutes">Focus, minutes</label
+              ><input
+                id="minutes"
+                type="number"
+                min="0.1"
+                max="1440"
+                step="0.1"
+                value="25"
+              />
+            </div>
+            <div class="field">
+              <label for="break">Break, minutes</label
+              ><input
+                id="break"
+                type="number"
+                min="0.1"
+                max="1440"
+                step="0.1"
+                value="5"
+              />
+            </div>
+          </div>
+          <button class="primary" id="start">Start focus</button
+          ><button id="savePreset">Save this timer</button
+          ><button id="syncPresets">Sync saved timers to Kindle</button>
+        </div>
+        <div class="orientation-control">
+          <div class="field">
+            <label for="rotation">Orientation · cable position</label
+            ><select id="rotation">
+              <option value="3">Right · landscape</option>
+              <option value="1">Left · landscape</option>
+              <option value="0">Bottom · portrait</option>
+              <option value="2">Top · portrait</option>
+            </select>
+          </div>
+          <button id="refresh">Clear old screen marks</button>
+        </div>
+        <div class="sound-control">
+          <label
+            ><input id="sound" type="checkbox" checked /> Chime on this
+            computer</label
+          ><button id="testSound">Test sound</button>
+        </div>
+        <p class="notice" id="sessionHint">
+          On Kindle: center pauses, Menu opens controls, Home exits. Synced
+          presets stay on the device.
+        </p>
+      </div>
+    </aside>
+  </main>
+  <div id="orientationMenu" popover>
+    <h2>Screen orientation</h2>
+    <p class="muted">Choose where the cable connects.</p>
+    <div class="orientation-options">
+      <button data-rotation="3" aria-label="Cable right">
+        <span class="orientation-device right"></span
+        ><span>Cable right</span></button
+      ><button data-rotation="1" aria-label="Cable left">
+        <span class="orientation-device left"></span
+        ><span>Cable left</span></button
+      ><button data-rotation="0" aria-label="Cable bottom">
+        <span class="orientation-device bottom"></span
+        ><span>Cable bottom</span></button
+      ><button data-rotation="2" aria-label="Cable top">
+        <span class="orientation-device top"></span><span>Cable top</span>
+      </button>
+    </div>
+    <p class="notice">The layout adjusts without restarting your session.</p>
+  </div>
+  <footer>
+    <span>Your tasks and presets stay on this computer.</span
+    ><span id="latency"></span>
+  </footer>
+  <script src="common.js"></script>
+  <script src="app.js"></script>
+</html>
